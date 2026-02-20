@@ -1,0 +1,15 @@
+[Unit]
+Description=FinOps Input Generator CLI
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/creatorjob_
+ExecStart=/home/pi/creatorjob_/.venv/bin/python generator.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
