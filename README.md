@@ -68,6 +68,13 @@ To simulate and test the generator locally:
    _You will immediately see payloads generated and delivered to the mock
    receiver pane!_
 
+   **CLI Override Mode:** If you do not want to change values in your `.env`
+   file, you can override those parameters entirely via the command line at
+   launch:
+   ```bash
+   python generator.py --scale-factor 720.0 --tick-interval 1.0 --webhook-url "http://127.0.0.1:8080/webhook"
+   ```
+
 ## Running Unit Tests
 
 The components are built using a Test-Driven Development (TDD) approach. Execute

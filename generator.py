@@ -3,6 +3,7 @@ import time
 import random
 import logging
 import json
+import argparse
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -21,12 +22,21 @@ logging.basicConfig(
 logger = logging.getLogger("finops_generator")
 
 def main():
-    webhook_url = os.environ.get("WEBHOOK_URL", "http://127.0.0.1:8080/webhook")
+    parser = argparse.ArgumentParser(description="FinOps machine learning job generator.")
+    parser.add_argument("--webhook-url", type=str, 
+                        default=os.environ.get("WEBHOOK_URL", "http://127.0.0.1:8080/webhook"),
+                        help="Target webhook URL.")
+    parser.add_argument("--scale-factor", type=float, 
+                        default=float(os.environ.get("SCALE_FACTOR", 720.0)),
+                        help="Simulation time acceleration scale factor.")
+    parser.add_argument("--tick-interval", type=float, 
+                        default=float(os.environ.get("TICK_INTERVAL_SEC", 1.0)),
+                        help="Real-world seconds between processing ticks.")
+    args = parser.parse_args()
     
-    # Accelerated mode: 30 days (2,592,000s) in 1 hour (3600s) = scale factor 720
-    # Configurable, defaulting to 720 (1 hour simulation) for fast observing
-    scale_factor = float(os.environ.get("SCALE_FACTOR", 720.0))
-    tick_interval_real_sec = float(os.environ.get("TICK_INTERVAL_SEC", 1.0))
+    webhook_url = args.webhook_url
+    scale_factor = args.scale_factor
+    tick_interval_real_sec = args.tick_interval
     
     logger.info(f"Starting FinOps Input Generator. Target Webhook: {webhook_url}")
     logger.info(f"Scale Factor: {scale_factor}x. Tick Interval: {tick_interval_real_sec}s")
