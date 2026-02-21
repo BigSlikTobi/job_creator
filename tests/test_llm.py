@@ -11,7 +11,7 @@ def test_generate_job_payload(mock_model_class):
     
     # Mock generating content
     mock_response = MagicMock()
-    mock_response.text = '{"tier": "Tier 1", "priority": "Critical", "description": "Need GPUs."}'
+    mock_response.text = '{"tier": "Tier 1", "priority": "Critical", "region": "us-east", "compliance": "HIPAA", "sla": "99.99%", "min_quality": "high", "min_availability": "high", "description": "Need GPUs."}'
     mock_model_instance.generate_content.return_value = mock_response
     
     sim_time = datetime(2026, 2, 20, 12, 0, 0)
@@ -23,3 +23,8 @@ def test_generate_job_payload(mock_model_class):
     # Verify the mocked JSON was parsed correctly
     assert payload["tier"] == "Tier 1"
     assert "description" in payload
+    assert payload["region"] == "us-east"
+    assert payload["compliance"] == "HIPAA"
+    assert payload["sla"] == "99.99%"
+    assert payload["min_quality"] == "high"
+    assert payload["min_availability"] == "high"

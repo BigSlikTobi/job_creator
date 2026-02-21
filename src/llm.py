@@ -24,6 +24,11 @@ def generate_job_payload(current_sim_time: datetime) -> dict:
     - Resource requirements (e.g. GPU counts like 1x, 4x, 8x, or cluster sizes using A100, H100, TPU v4)
     - Duration in hours (between 1 and 720)
     - A deadline/SLA depending on the priority relative to the current time.
+    - Region (e.g. us-east, eu-west, global)
+    - Compliance (e.g. HIPAA, GDPR, None)
+    - SLA percentage (e.g. 99.9%, 99.99%)
+    - Minimum Quality (e.g. standard, high, premium)
+    - Minimum Availability (e.g. low, medium, high)
     
     Output strictly as a valid JSON object matching this exact schema:
     {{
@@ -32,6 +37,11 @@ def generate_job_payload(current_sim_time: datetime) -> dict:
       "resources": {{"gpus": "Integer", "type": "String", "description": "String details"}},
       "duration_hours": "Integer",
       "sla_deadline": "ISO 8601 Timestamp",
+      "region": "String",
+      "compliance": "String",
+      "sla": "String",
+      "min_quality": "String",
+      "min_availability": "String",
       "description": "String containing the realistic natural language request."
     }}
     
